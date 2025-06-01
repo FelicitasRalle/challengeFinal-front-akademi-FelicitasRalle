@@ -23,8 +23,8 @@ const LoginPage = () => {
   useEffect(() => {
     if (isAuthenticated && user) {
       console.log('Redirigiendo por rol:', user.role);
-      if (user.role === 'alumno') navigate('/cursos');
-      else if (user.role === 'profesor') navigate('/mis-cursos');
+      if (user.role === 'student') navigate('/cursos');
+      else if (user.role === 'professor') navigate('/mis-cursos');
       else if (user.role === 'superadmin') navigate('/admin/usuarios');
     }
   }, [isAuthenticated, user, navigate]);
