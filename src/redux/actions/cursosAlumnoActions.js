@@ -6,8 +6,14 @@ export const getCursos = () => async (dispatch) => {
   dispatch({ type: 'CURSOS_REQUEST' });
 
   try {
-    const res = await axios.get(`${API_URL}/cursos`);
-    dispatch({ type: 'CURSOS_SUCCESS', payload: res.data });
+    const token = localStorage.getItem('token');
+    const res = await axios.get(`${API_URL}/courses`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    dispatch({ type: 'CURSOS_SUCCESS', payload: res.data.courses });
   } catch (error) {
     dispatch({
       type: 'CURSOS_FAILURE',
@@ -15,3 +21,4 @@ export const getCursos = () => async (dispatch) => {
     });
   }
 };
+

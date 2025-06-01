@@ -1,0 +1,26 @@
+
+.navbar-akademi {
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand-akademi {
+  color: #003B73;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-brand-akademi:hover {
+  color: #00254e;
+}
+
+.nav-link,
+.dropdown-item {
+  color: #003B73;
+  font-weight: 500;
+}
+
+.nav-link:hover,
+.dropdown-item:hover {
+  color: #F45C2C;
+}

@@ -4,7 +4,7 @@ const initialState = {
   error: null,
 };
 
-const cursoReducer = (state = initialState, action) => {
+const cursosAlumnoReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CURSOS_REQUEST':
       return { ...state, loading: true };
@@ -17,4 +17,5 @@ const cursoReducer = (state = initialState, action) => {
   }
 };
 
-export default cursoReducer;
+export default cursosAlumnoReducer;
+
