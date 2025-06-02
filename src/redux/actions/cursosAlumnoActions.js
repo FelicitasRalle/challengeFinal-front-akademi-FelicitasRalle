@@ -24,6 +24,7 @@ export const getCursos = () => async (dispatch) => {
 };
 
 export const inscribirseCurso = (courseId) => async (dispatch, getState) => {
+  console.log("Inscribiendo al curso con ID:", courseId);
   try {
     const { auth: { userInfo } } = getState();
     const config = {
@@ -31,12 +32,13 @@ export const inscribirseCurso = (courseId) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
-    await axios.post(`${API_URL}/enrollments`, { courseId }, config);
-
+console.log("URL a la que se hace POST:", `${API_URL}/enrollments`);
+    await axios.post('/enrollments', { courseId }, config);
+  
     dispatch({ type: 'INSCRIPCION_EXITOSA', payload: courseId });
     toast.success('Inscripción exitosa al curso');
   } catch (error) {
+    console.log("POST enviado correctamente");
     const mensaje = error.response?.data?.message || 'Error al inscribirse';
     dispatch({ type: 'INSCRIPCION_FALLIDA', payload: mensaje });
     toast.error(mensaje);
