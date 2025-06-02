@@ -5,6 +5,8 @@ import { getUsuarios, updateUsuario, deleteUsuario } from '../redux/actions/usua
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
   const { usuarios, loading } = useSelector((state) => state.usuarios);
+  console.log("Usuarios en Redux:", usuarios);
+
   const [editando, setEditando] = useState(null);
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', role: '' });
 

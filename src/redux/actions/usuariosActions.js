@@ -3,40 +3,56 @@ import axios from 'axios';
 export const getUsuarios = () => async (dispatch, getState) => {
   try {
     dispatch({ type: 'USUARIOS_REQUEST' });
-    const { auth: { userInfo } } = getState();
-    const config = {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    };
-    console.log("Disparando GET /users con token:", userInfo.token);
-    const { data } = await axios.get('/users', config);
-    dispatch({ type: 'USUARIOS_SUCCESS', payload: data });
-  } catch (error) {
-    dispatch({ type: 'USUARIOS_FAIL', payload: error.response?.data?.message || error.message });
-  }
-};
 
-export const updateUsuario = (id, usuario) => async (dispatch, getState) => {
-  try {
-    const { auth: { userInfo } } = getState();
+    const { auth: { token } } = getState();
     const config = {
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${userInfo.token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
-    await axios.put(`/users/${id}`, usuario, config);
-    dispatch(getUsuarios());
+
+    const { data } = await axios.get('/users?limit=100', config);
+    dispatch({
+      type: 'USUARIOS_SUCCESS',
+      payload: data.users || [],
+    });
   } catch (error) {
-    console.error(error);
+    dispatch({
+      type: 'USUARIOS_FAIL',
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
 
 export const deleteUsuario = (id) => async (dispatch, getState) => {
   try {
-    const { auth: { userInfo } } = getState();
+    const { auth: { token } } = getState();
     const config = {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     };
+
     await axios.delete(`/users/${id}`, config);
     dispatch(getUsuarios());
   } catch (error) {
-    console.error(error);
+    console.error("Error al eliminar usuario:", error);
   }
 };
+
+export const updateUsuario = (id, formData) => async (dispatch, getState) => {
+  try {
+    const { auth: { token } } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    await axios.put(`/users/${id}`, formData, config);
+    dispatch(getUsuarios());
+  } catch (error) {
+    console.error("Error al actualizar usuario:", error);
+  }
+};
+
