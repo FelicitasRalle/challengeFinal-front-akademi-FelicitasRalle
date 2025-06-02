@@ -12,6 +12,13 @@ const cursosAlumnoReducer = (state = initialState, action) => {
       return { ...state, loading: false, cursos: action.payload };
     case 'CURSOS_FAILURE':
       return { ...state, loading: false, error: action.payload };
+    case 'INSCRIPCION_EXITOSA':
+      return {
+        ...state,
+        cursos: state.cursos.map(c => c._id === action.payload ? { ...c, enrolled: true } : c)
+      };
+    case 'INSCRIPCION_FALLIDA':
+      return { ...state, error: action.payload };
     default:
       return state;
   }

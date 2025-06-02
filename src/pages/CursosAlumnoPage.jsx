@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCursos } from '../redux/actions/cursosAlumnoActions';
-import { Spinner, Modal, Button } from 'react-bootstrap';
+import { getCursos, inscribirseCurso } from '../redux/actions/cursosAlumnoActions';
+import { Spinner } from 'react-bootstrap';
 import NavbarAlumno from '../components/NavBarAlumno';
 import '../styles/cursosAlumno.css';
 
@@ -10,6 +10,7 @@ const CursosAlumnoPage = () => {
   const { cursos, loading } = useSelector((state) => state.cursos);
   const [showModal, setShowModal] = useState(false);
   const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
 
   useEffect(() => {
     dispatch(getCursos());
@@ -17,18 +18,17 @@ const CursosAlumnoPage = () => {
 
   const handleVerMas = (curso) => {
     setCursoSeleccionado(curso);
+    setMensaje(null);
     setShowModal(true);
   };
 
-  const handleCerrarModal = () => {
-    setShowModal(false);
-    setCursoSeleccionado(null);
-  };
-
-  const handleInscribirse = (cursoId) => {
-    // Aquí va la lógica para inscribirse en el curso
-    setShowModal(false);
-    setCursoSeleccionado(null);
+  const handleInscripcion = async () => {
+    try {
+      await dispatch(inscribirseCurso(cursoSeleccionado._id));
+      setMensaje('Inscripción exitosa');
+    } catch {
+      setMensaje('No se pudo realizar la inscripción');
+    }
   };
 
   return (
@@ -60,28 +60,32 @@ const CursosAlumnoPage = () => {
             ))}
           </div>
         )}
-
-        {cursoSeleccionado && (
-          <Modal show={showModal} onHide={handleCerrarModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>{cursoSeleccionado.title}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p><strong>Descripción:</strong> {cursoSeleccionado.description}</p>
-              <p><strong>Categoría:</strong> {cursoSeleccionado.category}</p>
-              <p><strong>Nivel:</strong> {cursoSeleccionado.level}</p>
-              <p><strong>Precio:</strong> ${cursoSeleccionado.price}</p>
-              <p><strong>Profesor:</strong> {cursoSeleccionado.professor?.firstName} {cursoSeleccionado.professor?.lastName}</p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCerrarModal}>Cerrar</Button>
-              <Button variant="primary" onClick={() => handleInscribirse(cursoSeleccionado._id)}>Inscribirse</Button>
-            </Modal.Footer>
-          </Modal>
-        )}
       </div>
+
+      {showModal && cursoSeleccionado && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h3>{cursoSeleccionado.title}</h3>
+            <p>{cursoSeleccionado.description}</p>
+            <p><strong>Categoría:</strong> {cursoSeleccionado.category}</p>
+            <p><strong>Precio:</strong> ${cursoSeleccionado.price}</p>
+            <p><strong>Nivel:</strong> {cursoSeleccionado.level}</p>
+            <p><strong>Profesor:</strong> {cursoSeleccionado.professor?.firstName} {cursoSeleccionado.professor?.lastName}</p>
+            {mensaje && <p className="mensaje-inscripcion">{mensaje}</p>}
+            <div className="modal-buttons">
+              <button className="btn-inscribirse" onClick={handleInscripcion}>Inscribirse</button>
+              <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cerrar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
 export default CursosAlumnoPage;
+
+
+
+
+
