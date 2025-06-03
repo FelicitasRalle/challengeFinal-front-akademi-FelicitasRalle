@@ -7,6 +7,8 @@ import {
 } from "../redux/actions/usuariosActions";
 import "../styles/superadmin.css";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
+import NavbarSuperadmin from "../components/NavBarSuperadmin";
+import CrearUsuarioModal from "../components/CrearUsuarioModal";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ const SuperAdminDashboard = () => {
     email: "",
     role: "",
   });
+
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   useEffect(() => {
     console.log("Ejecutando useEffect");
@@ -41,110 +45,124 @@ const SuperAdminDashboard = () => {
   };
 
   return (
-    <div className="table-container">
-      <h2 className="mb-4">Usuarios</h2>
-      {loading ? (
-        <p>Cargando...</p>
-      ) : (
-        <table className="table table-bordered custom-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Email</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(usuarios) &&
-              usuarios.map((u) => (
-                <tr key={u._id} className="border-t">
-                  <td className="p-2">
-                    {editando === u._id ? (
-                      <input
-                        value={form.firstName}
-                        onChange={(e) =>
-                          setForm({ ...form, firstName: e.target.value })
-                        }
-                      />
-                    ) : (
-                      u.firstName
-                    )}
-                  </td>
-                  <td className="p-2">
-                    {editando === u._id ? (
-                      <input
-                        value={form.lastName}
-                        onChange={(e) =>
-                          setForm({ ...form, lastName: e.target.value })
-                        }
-                      />
-                    ) : (
-                      u.lastName
-                    )}
-                  </td>
-                  <td className="p-2">
-                    {editando === u._id ? (
-                      <input
-                        value={form.email}
-                        onChange={(e) =>
-                          setForm({ ...form, email: e.target.value })
-                        }
-                      />
-                    ) : (
-                      u.email
-                    )}
-                  </td>
-                  <td className="p-2">
-                    {editando === u._id ? (
-                      <select
-                        value={form.role}
-                        onChange={(e) =>
-                          setForm({ ...form, role: e.target.value })
-                        }
-                      >
-                        <option value="student">student</option>
-                        <option value="professor">professor</option>
-                        <option value="superadmin">superadmin</option>
-                      </select>
-                    ) : (
-                      u.role
-                    )}
-                  </td>
-                  <td>
-                    {editando === u._id ? (
+    <>
+      <NavbarSuperadmin />
+      <div className="table-container">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h2 className="mb-0">Usuarios</h2>
+          <button className="btn btn-primary" onClick={() => setMostrarModal(true)}>
+            Crear Usuario
+          </button>
+        </div>
+        {loading ? (
+          <p>Cargando...</p>
+        ) : (
+          <table className="table table-bordered custom-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(usuarios) &&
+                usuarios.map((u) => (
+                  <tr key={u._id} className="border-t">
+                    <td className="p-2">
+                      {editando === u._id ? (
+                        <input
+                          value={form.firstName}
+                          onChange={(e) =>
+                            setForm({ ...form, firstName: e.target.value })
+                          }
+                        />
+                      ) : (
+                        u.firstName
+                      )}
+                    </td>
+                    <td className="p-2">
+                      {editando === u._id ? (
+                        <input
+                          value={form.lastName}
+                          onChange={(e) =>
+                            setForm({ ...form, lastName: e.target.value })
+                          }
+                        />
+                      ) : (
+                        u.lastName
+                      )}
+                    </td>
+                    <td className="p-2">
+                      {editando === u._id ? (
+                        <input
+                          value={form.email}
+                          onChange={(e) =>
+                            setForm({ ...form, email: e.target.value })
+                          }
+                        />
+                      ) : (
+                        u.email
+                      )}
+                    </td>
+                    <td className="p-2">
+                      {editando === u._id ? (
+                        <select
+                          value={form.role}
+                          onChange={(e) =>
+                            setForm({ ...form, role: e.target.value })
+                          }
+                        >
+                          <option value="student">student</option>
+                          <option value="professor">professor</option>
+                          <option value="superadmin">superadmin</option>
+                        </select>
+                      ) : (
+                        u.role
+                      )}
+                    </td>
+                    <td>
+                      {editando === u._id ? (
+                        <button
+                          onClick={handleSave}
+                          className="btn-icon text-success"
+                          title="Guardar"
+                        >
+                          <FaSave />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleEdit(u)}
+                          className="btn-icon text-primary"
+                          title="Editar"
+                        >
+                          <FaEdit />
+                        </button>
+                      )}
                       <button
-                        onClick={handleSave}
-                        className="btn-icon text-success"
-                        title="Guardar"
+                        onClick={() => handleDelete(u._id)}
+                        className="btn-icon text-danger ms-2"
+                        title="Eliminar"
                       >
-                        <FaSave />
+                        <FaTrash />
                       </button>
-                    ) : (
-                      <button
-                        onClick={() => handleEdit(u)}
-                        className="btn-icon text-primary"
-                        title="Editar"
-                      >
-                        <FaEdit />
-                      </button>
-                    )}
-                    <button
-                      onClick={() => handleDelete(u._id)}
-                      className="btn-icon text-danger ms-2"
-                      title="Eliminar"
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+      <CrearUsuarioModal
+        show={mostrarModal}
+        onHide={() => setMostrarModal(false)}
+        onUsuarioCreado={() => dispatch(getUsuarios())}
+      />
+    </>
   );
 };
 
 export default SuperAdminDashboard;
+
