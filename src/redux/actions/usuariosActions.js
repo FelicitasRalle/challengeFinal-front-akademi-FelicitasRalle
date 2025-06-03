@@ -49,7 +49,8 @@ export const updateUsuario = (id, formData) => async (dispatch, getState) => {
       }
     };
 
-    await axios.put(`/users/${id}`, formData, config);
+    await axios.put(`http://localhost:5000/users/${id}`, formData, config);
+
     dispatch(getUsuarios());
   } catch (error) {
     console.error("Error al actualizar usuario:", error);

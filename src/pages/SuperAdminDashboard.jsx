@@ -9,6 +9,7 @@ import "../styles/superadmin.css";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import NavbarSuperadmin from "../components/NavBarSuperadmin";
 import CrearUsuarioModal from "../components/CrearUsuarioModal";
+import ConfirmarEliminarModal from "../components/ConfirmarEliminarModal";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const SuperAdminDashboard = () => {
   });
 
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+  const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
 
   useEffect(() => {
     console.log("Ejecutando useEffect");
@@ -41,7 +44,7 @@ const SuperAdminDashboard = () => {
   };
 
   const handleDelete = (id) => {
-    if (window.confirm("¿Eliminar usuario?")) dispatch(deleteUsuario(id));
+    dispatch(deleteUsuario(id));
   };
 
   return (
@@ -142,7 +145,10 @@ const SuperAdminDashboard = () => {
                         </button>
                       )}
                       <button
-                        onClick={() => handleDelete(u._id)}
+                        onClick={() => {
+                          setUsuarioAEliminar(u._id);
+                          setMostrarConfirmacion(true);
+                        }}
                         className="btn-icon text-danger ms-2"
                         title="Eliminar"
                       >
@@ -159,6 +165,14 @@ const SuperAdminDashboard = () => {
         show={mostrarModal}
         onHide={() => setMostrarModal(false)}
         onUsuarioCreado={() => dispatch(getUsuarios())}
+      />
+      <ConfirmarEliminarModal
+        show={mostrarConfirmacion}
+        onHide={() => setMostrarConfirmacion(false)}
+        onConfirm={() => {
+          handleDelete(usuarioAEliminar);
+          setMostrarConfirmacion(false);
+        }}
       />
     </>
   );
