@@ -53,7 +53,7 @@ const SuperAdminDashboard = () => {
       <div className="table-container">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="mb-0">Usuarios</h2>
-          <button className="btn btn-primary" onClick={() => setMostrarModal(true)}>
+          <button className="btn-crear btn" onClick={() => setMostrarModal(true)}>
             Crear Usuario
           </button>
         </div>
