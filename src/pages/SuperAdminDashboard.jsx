@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsuarios, updateUsuario, deleteUsuario } from '../redux/actions/usuariosActions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUsuarios,
+  updateUsuario,
+  deleteUsuario,
+} from "../redux/actions/usuariosActions";
+import "../styles/superadmin.css";
+import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
@@ -8,10 +14,15 @@ const SuperAdminDashboard = () => {
   console.log("Usuarios en Redux:", usuarios);
 
   const [editando, setEditando] = useState(null);
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', role: '' });
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: "",
+  });
 
   useEffect(() => {
-     console.log("Ejecutando useEffect");
+    console.log("Ejecutando useEffect");
     dispatch(getUsuarios());
   }, [dispatch]);
 
@@ -26,54 +37,109 @@ const SuperAdminDashboard = () => {
   };
 
   const handleDelete = (id) => {
-    if (window.confirm('¿Eliminar usuario?')) dispatch(deleteUsuario(id));
+    if (window.confirm("¿Eliminar usuario?")) dispatch(deleteUsuario(id));
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Usuarios</h2>
-      {loading ? <p>Cargando...</p> : (
-        <table className="w-full border">
+    <div className="table-container">
+      <h2 className="mb-4">Usuarios</h2>
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <table className="table table-bordered custom-table">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2">Nombre</th>
-              <th className="p-2">Apellido</th>
-              <th className="p-2">Email</th>
-              <th className="p-2">Rol</th>
-              <th className="p-2">Acciones</th>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(usuarios) && usuarios.map((u) => (
-              <tr key={u._id} className="border-t">
-                <td className="p-2">
-                  {editando === u._id ? <input value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} /> : u.firstName}
-                </td>
-                <td className="p-2">
-                  {editando === u._id ? <input value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} /> : u.lastName}
-                </td>
-                <td className="p-2">
-                  {editando === u._id ? <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /> : u.email}
-                </td>
-                <td className="p-2">
-                  {editando === u._id ? (
-                    <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
-                      <option value="student">student</option>
-                      <option value="professor">professor</option>
-                      <option value="superadmin">superadmin</option>
-                    </select>
-                  ) : u.role}
-                </td>
-                <td className="p-2">
-                  {editando === u._id ? (
-                    <button onClick={handleSave} className="text-green-600">Guardar</button>
-                  ) : (
-                    <button onClick={() => handleEdit(u)} className="text-blue-600">Editar</button>
-                  )}
-                  <button onClick={() => handleDelete(u._id)} className="ml-2 text-red-600">Eliminar</button>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(usuarios) &&
+              usuarios.map((u) => (
+                <tr key={u._id} className="border-t">
+                  <td className="p-2">
+                    {editando === u._id ? (
+                      <input
+                        value={form.firstName}
+                        onChange={(e) =>
+                          setForm({ ...form, firstName: e.target.value })
+                        }
+                      />
+                    ) : (
+                      u.firstName
+                    )}
+                  </td>
+                  <td className="p-2">
+                    {editando === u._id ? (
+                      <input
+                        value={form.lastName}
+                        onChange={(e) =>
+                          setForm({ ...form, lastName: e.target.value })
+                        }
+                      />
+                    ) : (
+                      u.lastName
+                    )}
+                  </td>
+                  <td className="p-2">
+                    {editando === u._id ? (
+                      <input
+                        value={form.email}
+                        onChange={(e) =>
+                          setForm({ ...form, email: e.target.value })
+                        }
+                      />
+                    ) : (
+                      u.email
+                    )}
+                  </td>
+                  <td className="p-2">
+                    {editando === u._id ? (
+                      <select
+                        value={form.role}
+                        onChange={(e) =>
+                          setForm({ ...form, role: e.target.value })
+                        }
+                      >
+                        <option value="student">student</option>
+                        <option value="professor">professor</option>
+                        <option value="superadmin">superadmin</option>
+                      </select>
+                    ) : (
+                      u.role
+                    )}
+                  </td>
+                  <td>
+                    {editando === u._id ? (
+                      <button
+                        onClick={handleSave}
+                        className="btn-icon text-success"
+                        title="Guardar"
+                      >
+                        <FaSave />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleEdit(u)}
+                        className="btn-icon text-primary"
+                        title="Editar"
+                      >
+                        <FaEdit />
+                      </button>
+                    )}
+                    <button
+                      onClick={() => handleDelete(u._id)}
+                      className="btn-icon text-danger ms-2"
+                      title="Eliminar"
+                    >
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}
