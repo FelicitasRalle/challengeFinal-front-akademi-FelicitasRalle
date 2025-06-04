@@ -18,6 +18,10 @@ const CursosProfesorPage = () => {
     dispatch(getCursosProfesor());
   }, [dispatch]);
 
+  useEffect(() => {
+  console.log("Cursos recibidos:", cursos);
+}, [cursos]);
+
   return (
     <>
       <NavbarProfesor />

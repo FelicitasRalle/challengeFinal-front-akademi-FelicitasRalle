@@ -27,7 +27,7 @@ const LoginPage = () => {
     if (isAuthenticated && user) {
       console.log("Redirigiendo por rol:", user.role);
       if (user.role === "student") navigate("/cursos");
-      else if (user.role === "professor") navigate("/cursosProfesor");
+      else if (user.role === "professor") navigate("/profesor/cursos");
       else if (user.role === "superadmin") navigate("/admin/usuarios");
     }
   }, [isAuthenticated, user, navigate]);

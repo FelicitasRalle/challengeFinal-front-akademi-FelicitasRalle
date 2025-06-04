@@ -15,7 +15,7 @@ export const getCursosProfesor = () => async (dispatch, getState) => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    const { data } = await axios.get(`/courses/professor/${userId}`, config);
+    const { data } = await axios.get(`/courses/professor`, config);
     dispatch({ type: "CURSOS_PROFESOR_SUCCESS", payload: data });
   } catch (error) {
     console.error("Error al obtener cursos del profesor:", error);

@@ -19,8 +19,6 @@ const NavbarProfesor = () => {
         <Navbar.Collapse>
           <Nav className="ms-auto">
             <Nav.Link onClick={() => navigate("/profesor/cursos")}>Mis Cursos</Nav.Link>
-            <Nav.Link onClick={() => navigate("/profesor/alumnos")}>Alumnos</Nav.Link>
-            <Nav.Link onClick={() => navigate("/profesor/notas")}>Notas</Nav.Link>
             <Nav.Link onClick={handleLogout}>Cerrar Sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>

@@ -7,7 +7,7 @@ export const cursosProfesorReducer = (state = initialState, action) => {
     case "CURSOS_PROFESOR_SUCCESS":
       return {
         ...state,
-        cursos: action.payload.courses,
+        cursos: action.payload,
       };
     default:
       return state;
