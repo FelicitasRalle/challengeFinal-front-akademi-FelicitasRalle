@@ -10,9 +10,11 @@ export const login = (credentials) => async (dispatch) => {
     const res = await axios.post(`${API_URL}/auth/login`, credentials);
 
     const { token } = res.data;
-    const user = jwtDecode(token); // ← forma correcta
+    const user = jwtDecode(token); 
+    console.log("Usuario decodificado del token:", user);
 
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     dispatch({

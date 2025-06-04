@@ -1,7 +1,7 @@
 const initialState = {
   isAuthenticated: false,
   loading: false,
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
   error: null,
 };

@@ -1,0 +1,21 @@
+.card-curso {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fdfdfd;
+}
+
+.card-curso:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  background-color: #fff7f0;
+}
+
+.card-curso .card-title {
+  color: #0d3b66;
+}
+
+.card-curso .card-subtitle,
+.card-curso .card-text {
+  color: #555;
+}

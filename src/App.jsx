@@ -4,6 +4,7 @@ import LoginPage from './pages/Login';
 import CursosAlumnoPage from './pages/CursosAlumnoPage';
 import SuperAdminDashboard from './pages/SuperAdminDashboard';
 import CursosAdminPage from './pages/CursosAdminPage';
+import CursosProfesorPage from './pages/CursosProfesorPage';
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
         <Route path="/cursos" element={<CursosAlumnoPage />} />
         <Route path="/admin/usuarios" element={<SuperAdminDashboard />} />
         <Route path="/cursosAdmin" element={<CursosAdminPage />} />
-
+        <Route path="/cursosProfesor" element={<CursosProfesorPage />} />
       </Routes>
     </Router>
   );
