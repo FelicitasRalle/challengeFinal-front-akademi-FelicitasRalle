@@ -9,7 +9,7 @@ const CrearCursoModal = ({ show, onHide, onCursoCreado }) => {
     title: "",
     description: "",
     price: "",
-    level: "",
+    level: "beginner",
     category: "",
     maxStudents: "",
   });
@@ -19,7 +19,11 @@ const CrearCursoModal = ({ show, onHide, onCursoCreado }) => {
   };
 
   const handleSubmit = () => {
-    dispatch(crearCursoProfesor(form));
+    dispatch(crearCursoProfesor({
+      ...form,
+      price: Number(form.price),
+      maxStudents: Number(form.maxStudents),
+    }));
     onHide();
     onCursoCreado();
   };
@@ -62,11 +66,15 @@ const CrearCursoModal = ({ show, onHide, onCursoCreado }) => {
           <Form.Group controlId="formLevel">
             <Form.Label>Nivel</Form.Label>
             <Form.Control
-              type="text"
+              as="select"
               name="level"
               value={form.level}
               onChange={handleChange}
-            />
+            >
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </Form.Control>
           </Form.Group>
           <Form.Group controlId="formCategory">
             <Form.Label>Categoría</Form.Label>
