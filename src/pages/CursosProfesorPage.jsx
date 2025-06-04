@@ -5,6 +5,7 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import CrearCursoModal from "../components/CrearCursoModal";
 import NavbarProfesor from "../components/NavBarProfesor";
+import CursoDetalleModal from "../components/CursoDetalleModal";
 import "../styles/cursosProfesor.css";
 
 const CursosProfesorPage = () => {
@@ -13,14 +14,15 @@ const CursosProfesorPage = () => {
   const { cursos } = useSelector((state) => state.cursosProfesor);
 
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
 
   useEffect(() => {
     dispatch(getCursosProfesor());
   }, [dispatch]);
 
   useEffect(() => {
-  console.log("Cursos recibidos:", cursos);
-}, [cursos]);
+    console.log("Cursos recibidos:", cursos);
+  }, [cursos]);
 
   return (
     <>
@@ -49,7 +51,7 @@ const CursosProfesorPage = () => {
                     <div className="d-flex justify-content-end">
                       <Button
                         variant="outline-primary"
-                        onClick={() => navigate(`/profesor/alumnos/${curso._id}`)}
+                        onClick={() => setCursoSeleccionado(curso)}
                       >
                         Ver más
                       </Button>
@@ -65,6 +67,13 @@ const CursosProfesorPage = () => {
         onHide={() => setMostrarModal(false)}
         onCursoCreado={() => dispatch(getCursosProfesor())}
       />
+      {cursoSeleccionado && (
+        <CursoDetalleModal
+          curso={cursoSeleccionado}
+          onHide={() => setCursoSeleccionado(null)}
+          onActualizado={() => dispatch(getCursosProfesor())}
+        />
+      )}
     </>
   );
 };
