@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAlumnosCurso, cargarNota } from "../redux/actions/calificacionesProfesorActions";
+import { getAlumnosCurso, cargarNota } from "../redux/actions/calificacionesActions";
 import NavbarProfesor from "../components/NavBarProfesor";
-import "../styles/calificacionesProfesor.css";
+import "../styles/calificaciones.css";
 
 const CalificacionesProfesorPage = () => {
   const { courseId } = useParams();
@@ -11,6 +11,7 @@ const CalificacionesProfesorPage = () => {
 
   const { alumnos, loading } = useSelector((state) => state.calificaciones);
   const [notas, setNotas] = useState({});
+  const [trimestres, setTrimestres] = useState({});
 
   useEffect(() => {
     dispatch(getAlumnosCurso(courseId));
@@ -20,12 +21,17 @@ const CalificacionesProfesorPage = () => {
     setNotas((prev) => ({ ...prev, [studentId]: value }));
   };
 
+  const handleTrimestreChange = (studentId, value) => {
+    setTrimestres((prev) => ({ ...prev, [studentId]: value }));
+  };
+
   const handleGuardar = (studentId) => {
     const value = Number(notas[studentId]);
-    if (!isNaN(value) && value >= 0 && value <= 10) {
-      dispatch(cargarNota({ studentId, courseId, value }));
+    const trimester = Number(trimestres[studentId]);
+    if (!isNaN(value) && value >= 0 && value <= 10 && [1, 2, 3].includes(trimester)) {
+      dispatch(cargarNota({ studentId, courseId, value, trimester }));
     } else {
-      alert("La nota debe estar entre 0 y 10");
+      alert("La nota debe estar entre 0 y 10 y el trimestre entre 1 y 3");
     }
   };
 
@@ -43,6 +49,7 @@ const CalificacionesProfesorPage = () => {
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Nota</th>
+                <th>Trimestre</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -61,6 +68,17 @@ const CalificacionesProfesorPage = () => {
                     />
                   </td>
                   <td>
+                    <select
+                      value={trimestres[alumno._id] || ""}
+                      onChange={(e) => handleTrimestreChange(alumno._id, e.target.value)}
+                    >
+                      <option value="">Seleccionar</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </td>
+                  <td>
                     <button onClick={() => handleGuardar(alumno._id)}>Guardar</button>
                   </td>
                 </tr>
@@ -74,3 +92,4 @@ const CalificacionesProfesorPage = () => {
 };
 
 export default CalificacionesProfesorPage;
+
