@@ -50,10 +50,19 @@ const CursosProfesorPage = () => {
                     </Card.Text>
                     <div className="d-flex justify-content-end">
                       <Button
+                        variant="outline-success"
+                        className="mt-2"
+                        onClick={() =>
+                          navigate(`/profesor/calificaciones/${curso._id}`)
+                        }
+                      >
+                        Calificaciones
+                      </Button>
+                      <Button
                         variant="outline-primary"
                         onClick={() => setCursoSeleccionado(curso)}
                       >
-                        Ver más
+                        Editar
                       </Button>
                     </div>
                   </Card.Body>
