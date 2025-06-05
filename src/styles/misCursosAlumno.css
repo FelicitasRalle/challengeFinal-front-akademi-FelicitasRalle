@@ -1,0 +1,26 @@
+.curso-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.curso-info h4 {
+  margin: 0 0 4px 0;
+}
+
+.btn-cancelar {
+  background-color: #c65300;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-cancelar:hover {
+  background-color: #d66a34;
+}

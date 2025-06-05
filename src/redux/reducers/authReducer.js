@@ -4,6 +4,7 @@ const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   token: localStorage.getItem("token") || null,
   error: null,
+  justLoggedIn: false,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -16,6 +17,7 @@ export default function authReducer(state = initialState, action) {
         user: action.payload.user,
         token: action.payload.token,
         isAuthenticated: true,
+        justLoggedIn: true,
       };
 
     case "LOGIN_FAILURE":

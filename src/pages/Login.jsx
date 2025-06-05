@@ -10,7 +10,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated, user } = useSelector(
+  const { loading, error, isAuthenticated, user, justLoggedIn } = useSelector(
     (state) => state.auth
   );
 
@@ -24,13 +24,14 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && user) {
-      console.log("Redirigiendo por rol:", user.role);
-      if (user.role === "student") navigate("/cursos");
-      else if (user.role === "professor") navigate("/profesor/cursos");
-      else if (user.role === "superadmin") navigate("/admin/usuarios");
-    }
-  }, [isAuthenticated, user, navigate]);
+  if (isAuthenticated && user && justLoggedIn) {
+    console.log("Redirigiendo por rol:", user.role);
+    if (user.role === "student") navigate("/cursos");
+    else if (user.role === "professor") navigate("/profesor/cursos");
+    else if (user.role === "superadmin") navigate("/admin/usuarios");
+  }
+}, [isAuthenticated, user, justLoggedIn, navigate]);
+
 
   return (
     <div className="login-page">
