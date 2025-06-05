@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAlumnosCurso, cargarNota, eliminarNota } from "../redux/actions/calificacionesProfesorActions";
+import {
+  getAlumnosCurso,
+  cargarNota,
+  eliminarNota,
+} from "../redux/actions/calificacionesProfesorActions";
 import NavbarProfesor from "../components/NavBarProfesor";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,10 +15,12 @@ const CalificacionesProfesorPage = () => {
   const { courseId } = useParams();
   const dispatch = useDispatch();
 
-  const { alumnos, loading, notas, trimestres, notaIds } = useSelector((state) => state.calificaciones);
+  const { alumnos, loading, notas, trimestres, notaIds } = useSelector(
+    (state) => state.calificaciones
+  );
   const [localNotas, setLocalNotas] = useState({});
   const [localTrimestres, setLocalTrimestres] = useState({});
-  const [status, setStatus] = useState({}); // estado por alumno: 'guardando', 'eliminando', null
+  const [status, setStatus] = useState({});
 
   useEffect(() => {
     dispatch(getAlumnosCurso(courseId));
@@ -36,13 +42,20 @@ const CalificacionesProfesorPage = () => {
   const handleGuardar = async (studentId) => {
     const value = Number(localNotas[studentId]);
     const trimester = Number(localTrimestres[studentId]);
-    if (!isNaN(value) && value >= 0 && value <= 10 && [1, 2, 3].includes(trimester)) {
+    if (
+      !isNaN(value) &&
+      value >= 0 &&
+      value <= 10 &&
+      [1, 2, 3].includes(trimester)
+    ) {
       setStatus((prev) => ({ ...prev, [studentId]: "guardando" }));
       const notaId = notaIds[studentId];
-      await dispatch(cargarNota({ studentId, courseId, value, trimester, notaId }));
+      await dispatch(
+        cargarNota({ studentId, courseId, value, trimester, notaId })
+      );
       toast.success(notaId ? "Nota actualizada" : "Nota guardada");
       setStatus((prev) => ({ ...prev, [studentId]: null }));
-      dispatch(getAlumnosCurso(courseId)); // recargar
+      dispatch(getAlumnosCurso(courseId));
     } else {
       alert("La nota debe estar entre 0 y 10 y el trimestre entre 1 y 3");
     }
@@ -51,7 +64,6 @@ const CalificacionesProfesorPage = () => {
   const handleEliminar = async (studentId) => {
     const notaId = notaIds[studentId];
     if (!notaId) return;
-    if (!window.confirm("¿Estás seguro de eliminar esta nota?")) return;
 
     setStatus((prev) => ({ ...prev, [studentId]: "eliminando" }));
     await dispatch(eliminarNota(notaId));
@@ -63,12 +75,12 @@ const CalificacionesProfesorPage = () => {
   return (
     <>
       <NavbarProfesor />
-      <div className="p-4">
-        <h2>Calificaciones</h2>
+      <div className="calificaciones-container">
+        <h2 className="titulo">Calificaciones</h2>
         {loading ? (
-          <p>Cargando alumnos...</p>
+          <p className="cargando">Cargando alumnos...</p>
         ) : (
-          <table className="tabla-calificaciones">
+          <table className="tabla">
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -93,6 +105,7 @@ const CalificacionesProfesorPage = () => {
                     <td>{alumno.lastName}</td>
                     <td>
                       <input
+                        className="input-nota"
                         type="number"
                         min="0"
                         max="10"
@@ -102,8 +115,11 @@ const CalificacionesProfesorPage = () => {
                     </td>
                     <td>
                       <select
+                        className="select-trimestre"
                         value={trimestre || ""}
-                        onChange={(e) => handleTrimestreChange(id, e.target.value)}
+                        onChange={(e) =>
+                          handleTrimestreChange(id, e.target.value)
+                        }
                       >
                         <option value="">Seleccionar</option>
                         <option value="1">1</option>
@@ -112,11 +128,23 @@ const CalificacionesProfesorPage = () => {
                       </select>
                     </td>
                     <td>
-                      <button onClick={() => handleGuardar(id)} disabled={isGuardando || isEliminando}>
-                        {isGuardando ? "Guardando..." : tieneNota ? "Editar" : "Guardar"}
+                      <button
+                        className="btn guardar"
+                        onClick={() => handleGuardar(id)}
+                        disabled={isGuardando || isEliminando}
+                      >
+                        {isGuardando
+                          ? "Guardando..."
+                          : tieneNota
+                          ? "Editar"
+                          : "Guardar"}
                       </button>
                       {tieneNota && (
-                        <button onClick={() => handleEliminar(id)} disabled={isGuardando || isEliminando}>
+                        <button
+                          className="btn eliminar"
+                          onClick={() => handleEliminar(id)}
+                          disabled={isGuardando || isEliminando}
+                        >
                           {isEliminando ? "Eliminando..." : "Eliminar"}
                         </button>
                       )}
@@ -128,10 +156,15 @@ const CalificacionesProfesorPage = () => {
           </table>
         )}
       </div>
+
       <ToastContainer />
     </>
   );
 };
 
 export default CalificacionesProfesorPage;
+
+
+
+
 
