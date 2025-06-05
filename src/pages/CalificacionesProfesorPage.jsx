@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAlumnosCurso, cargarNota } from "../redux/actions/calificacionesActions";
+import { getAlumnosCurso, cargarNota } from "../redux/actions/calificacionesProfesorActions";
 import NavbarProfesor from "../components/NavBarProfesor";
-import "../styles/calificaciones.css";
+import "../styles/calificacionesProfesor.css";
 
 const CalificacionesProfesorPage = () => {
   const { courseId } = useParams();
