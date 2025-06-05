@@ -20,7 +20,7 @@ const NavbarAlumno = () => {
           <Nav className="ms-auto">
             <Nav.Link onClick={() => navigate("/cursos")}>Cursos</Nav.Link>
             <NavDropdown title="Mi cuenta">
-              <NavDropdown.Item onClick={() => navigate("/mis-cursos")}>
+              <NavDropdown.Item onClick={() => navigate("alumno/mis-cursos")}>
                 Mis Cursos
               </NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/calificaciones")}>

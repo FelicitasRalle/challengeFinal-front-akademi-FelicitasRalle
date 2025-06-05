@@ -5,6 +5,7 @@ import CursosAlumnoPage from './pages/CursosAlumnoPage';
 import SuperAdminDashboard from './pages/SuperAdminDashboard';
 import CursosAdminPage from './pages/CursosAdminPage';
 import CursosProfesorPage from './pages/CursosProfesorPage';
+import MisCursosAlumno from './pages/MisCursosAlumno';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/admin/usuarios" element={<SuperAdminDashboard />} />
         <Route path="/cursosAdmin" element={<CursosAdminPage />} />
         <Route path="/profesor/cursos" element={<CursosProfesorPage />} />
+        <Route path="cursos/alumno/mis-cursos" element={<MisCursosAlumno />} />
       </Routes>
     </Router>
   );

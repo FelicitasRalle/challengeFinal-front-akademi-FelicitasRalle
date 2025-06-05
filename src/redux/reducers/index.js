@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import cursosAlumnosReducer from './cursosAlumnoReducer';
+import cursosAlumnoReducer from './cursosAlumnoReducer';
 import { usuariosReducer } from './usuariosReducer';
 import { cursosAdminReducer } from './cursosAdminReducer';
 import { cursosProfesorReducer } from './cursosProfesorReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  cursos: cursosAlumnosReducer,
+  cursos: cursosAlumnoReducer,
   usuarios: usuariosReducer,
   cursosAdmin: cursosAdminReducer,
   cursosProfesor: cursosProfesorReducer,
