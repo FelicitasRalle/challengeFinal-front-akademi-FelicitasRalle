@@ -7,6 +7,7 @@ import CursosAdminPage from './pages/CursosAdminPage';
 import CursosProfesorPage from './pages/CursosProfesorPage';
 import MisCursosAlumno from './pages/MisCursosAlumno';
 import CalificacionesProfesorPage from './pages/CalificacionesProfesorPage';
+import CalificacionesAlumnoPage from './pages/CalificacionesAlumnoPage';
 
 const App = () => {
   return (
@@ -17,8 +18,10 @@ const App = () => {
         <Route path="/admin/usuarios" element={<SuperAdminDashboard />} />
         <Route path="/cursosAdmin" element={<CursosAdminPage />} />
         <Route path="/profesor/cursos" element={<CursosProfesorPage />} />
+        <Route path="/calificaciones/alumno/mis-cursos" element={<MisCursosAlumno />} />
         <Route path="cursos/alumno/mis-cursos" element={<MisCursosAlumno />} />
         <Route path="profesor/calificaciones/:courseId" element={<CalificacionesProfesorPage />} />
+        <Route path="calificaciones" element={<CalificacionesAlumnoPage />} />
       </Routes>
     </Router>
   );

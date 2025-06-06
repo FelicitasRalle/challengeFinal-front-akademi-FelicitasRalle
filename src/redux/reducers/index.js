@@ -5,6 +5,7 @@ import { usuariosReducer } from './usuariosReducer';
 import { cursosAdminReducer } from './cursosAdminReducer';
 import { cursosProfesorReducer } from './cursosProfesorReducer';
 import calificacionesProfesorReducer from "./calificacionesProfesorReducer";
+import calificacionesAlumnoReducer from './calificacionesAlumnoReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   cursosAdmin: cursosAdminReducer,
   cursosProfesor: cursosProfesorReducer,
   calificaciones: calificacionesProfesorReducer,
+  calificacionesAlumno: calificacionesAlumnoReducer
 });
 
 export default rootReducer;
