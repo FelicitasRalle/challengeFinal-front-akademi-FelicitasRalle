@@ -30,5 +30,12 @@ export const login = (credentials) => async (dispatch) => {
   }
 };
 
+export const register = (formData) => async () => {
+  try {
+    await axios.post('/auth/register', formData);
+  } catch (error) {
+    throw error;
+  }
+};
 
 

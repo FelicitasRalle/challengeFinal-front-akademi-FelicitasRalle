@@ -8,6 +8,9 @@ import CursosProfesorPage from './pages/CursosProfesorPage';
 import MisCursosAlumno from './pages/MisCursosAlumno';
 import CalificacionesProfesorPage from './pages/CalificacionesProfesorPage';
 import CalificacionesAlumnoPage from './pages/CalificacionesAlumnoPage';
+import RegisterPage from './pages/RegisterPage';
+import OlvidarContraseñaPage from './pages/OlvidarContraseñaPage';
+import ResetContraseñaPage from './pages/ResetContraseña';
 
 const App = () => {
   return (
@@ -22,6 +25,9 @@ const App = () => {
         <Route path="cursos/alumno/mis-cursos" element={<MisCursosAlumno />} />
         <Route path="profesor/calificaciones/:courseId" element={<CalificacionesProfesorPage />} />
         <Route path="calificaciones" element={<CalificacionesAlumnoPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<OlvidarContraseñaPage />} />
+        <Route path="/reset-password" element={<ResetContraseñaPage />} />
       </Routes>
     </Router>
   );

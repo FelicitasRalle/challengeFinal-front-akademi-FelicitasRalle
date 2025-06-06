@@ -1,3 +1,4 @@
+// src/pages/LoginPage.jsx
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authActions";
@@ -7,6 +8,7 @@ import '../styles/login.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [fieldErrors, setFieldErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -14,24 +16,33 @@ const LoginPage = () => {
     (state) => state.auth
   );
 
+  const validate = () => {
+    const errors = {};
+    if (!formData.email.trim()) errors.email = 'El email es obligatorio';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Email inválido';
+    if (!formData.password.trim()) errors.password = 'La contraseña es obligatoria';
+    return errors;
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = validate();
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
     await dispatch(login(formData));
   };
 
   useEffect(() => {
-  if (isAuthenticated && user && justLoggedIn) {
-    console.log("Redirigiendo por rol:", user.role);
-    if (user.role === "student") navigate("/cursos");
-    else if (user.role === "professor") navigate("/profesor/cursos");
-    else if (user.role === "superadmin") navigate("/admin/usuarios");
-  }
-}, [isAuthenticated, user, justLoggedIn, navigate]);
-
+    if (isAuthenticated && user && justLoggedIn) {
+      if (user.role === "student") navigate("/cursos");
+      else if (user.role === "professor") navigate("/profesor/cursos");
+      else if (user.role === "superadmin") navigate("/admin/usuarios");
+    }
+  }, [isAuthenticated, user, justLoggedIn, navigate]);
 
   return (
     <div className="login-page">
@@ -47,6 +58,7 @@ const LoginPage = () => {
               onChange={handleChange}
               required
             />
+            {fieldErrors.email && <small className="text-danger">{fieldErrors.email}</small>}
           </div>
           <div className="mb-3">
             <label className="form-label">Contraseña:</label>
@@ -57,6 +69,7 @@ const LoginPage = () => {
               onChange={handleChange}
               required
             />
+            {fieldErrors.password && <small className="text-danger">{fieldErrors.password}</small>}
           </div>
           <div className="d-grid">
             <button type="submit" className="btn login-btn" disabled={loading}>
@@ -69,9 +82,18 @@ const LoginPage = () => {
             </Alert>
           )}
         </form>
+        <div className="mt-3 text-center">
+          <span>¿No tenés cuenta? </span>
+          <a href="/register">Registrate aquí</a>
+        </div>
+        <div className="mt-2 text-center">
+          <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
       </div>
     </div>
   );
 };
 
 export default LoginPage;
+
+

@@ -25,11 +25,11 @@ const CursosAlumnoPage = () => {
   );
 
   useEffect(() => {
-    const filtrosFormateados = {
-      ...filtros,
-      category: filtros.category?.toLowerCase(),
-      level: filtros.level?.toLowerCase(),
-    };
+    const filtrosFormateados = {};
+    if (filtros.category) filtrosFormateados.category = filtros.category;
+    if (filtros.level) filtrosFormateados.level = filtros.level;
+    if (filtros.maxPrice) filtrosFormateados.maxPrice = filtros.maxPrice;
+
     dispatch(getCursos(filtrosFormateados));
     dispatch(getMisCursos());
   }, [dispatch, filtros]);
@@ -53,7 +53,12 @@ const CursosAlumnoPage = () => {
 
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
-    setFiltros((prev) => ({ ...prev, [name]: value }));
+    const newValue = (name === "category" || name === "level") ? value.toLowerCase() : value;
+    setFiltros((prev) => ({ ...prev, [name]: newValue }));
+  };
+
+  const limpiarFiltros = () => {
+    setFiltros({ category: '', level: '', maxPrice: '' });
   };
 
   return (
@@ -72,9 +77,9 @@ const CursosAlumnoPage = () => {
           />
           <select name="level" value={filtros.level} onChange={handleFiltroChange}>
             <option value="">Nivel</option>
-            <option value="beginner">Principiante</option>
-            <option value="intermediate">Intermedio</option>
-            <option value="advanced">Avanzado</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
           </select>
           <input
             type="number"
@@ -83,6 +88,9 @@ const CursosAlumnoPage = () => {
             placeholder="Precio máximo"
             onChange={handleFiltroChange}
           />
+          <button className="btn btn-outline-secondary ms-2" onClick={limpiarFiltros}>
+            Limpiar filtros
+          </button>
         </div>
 
         {loading ? (
@@ -164,4 +172,7 @@ const CursosAlumnoPage = () => {
 };
 
 export default CursosAlumnoPage;
+
+
+
 
