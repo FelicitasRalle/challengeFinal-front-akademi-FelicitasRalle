@@ -11,6 +11,8 @@ import CalificacionesAlumnoPage from './pages/CalificacionesAlumnoPage';
 import RegisterPage from './pages/RegisterPage';
 import OlvidarContraseñaPage from './pages/OlvidarContraseñaPage';
 import ResetContraseñaPage from './pages/ResetContraseña';
+import EstadisticasPage from './pages/EstadisticasPage';
+import CalificacionesAdminPage from './pages/CalificacionesAdminPage';
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<OlvidarContraseñaPage />} />
         <Route path="/reset-password" element={<ResetContraseñaPage />} />
+        <Route path="/admin/estadisticas" element={<EstadisticasPage />} />
+        <Route path="/admin/calificaciones" element={<CalificacionesAdminPage />} />
       </Routes>
     </Router>
   );
