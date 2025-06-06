@@ -29,14 +29,14 @@ export const deleteUsuario = (id) => async (dispatch, getState) => {
     const { auth: { token } } = getState();
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
 
     await axios.delete(`/users/${id}`, config);
     dispatch(getUsuarios());
   } catch (error) {
-    console.error("Error al eliminar usuario:", error);
+    throw error; 
   }
 };
 
@@ -45,15 +45,15 @@ export const updateUsuario = (id, formData) => async (dispatch, getState) => {
     const { auth: { token } } = getState();
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
 
-    await axios.put(`http://localhost:5000/users/${id}`, formData, config);
-
+    await axios.put(`/users/${id}`, formData, config);
     dispatch(getUsuarios());
   } catch (error) {
     console.error("Error al actualizar usuario:", error);
   }
 };
+
 

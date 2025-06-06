@@ -42,3 +42,21 @@ export const crearCursoProfesor = (nuevoCurso) => async (dispatch, getState) => 
     console.error("Error al crear curso:", error);
   }
 };
+
+export const eliminarCursoProfesor = (cursoId) => async (dispatch, getState) => {
+  try {
+    const { auth } = getState();
+    const { token } = auth;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    await axios.delete(`/courses/${cursoId}`, config);
+    dispatch(getCursosProfesor());
+  } catch (error) {
+    throw error; 
+  }
+};

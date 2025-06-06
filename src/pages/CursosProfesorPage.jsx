@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCursosProfesor } from "../redux/actions/cursosProfesorActions";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { getCursosProfesor, eliminarCursoProfesor } from "../redux/actions/cursosProfesorActions";
+import { Card, Button, Row, Col, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import CrearCursoModal from "../components/CrearCursoModal";
 import NavbarProfesor from "../components/NavBarProfesor";
@@ -16,13 +16,25 @@ const CursosProfesorPage = () => {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
 
+  const [errorEliminar, setErrorEliminar] = useState("");
+  const [mostrarErrorModal, setMostrarErrorModal] = useState(false);
+
   useEffect(() => {
     dispatch(getCursosProfesor());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("Cursos recibidos:", cursos);
-  }, [cursos]);
+  const handleEliminarCurso = async (cursoId) => {
+    try {
+      await dispatch(eliminarCursoProfesor(cursoId));
+    } catch (error) {
+      if (error.response?.status === 409) {
+        setErrorEliminar(error.response.data.message);
+      } else {
+        setErrorEliminar("Error al eliminar el curso.");
+      }
+      setMostrarErrorModal(true);
+    }
+  };
 
   return (
     <>
@@ -48,13 +60,11 @@ const CursosProfesorPage = () => {
                       Precio: ${curso.price} <br />
                       Cupos máximos: {curso.maxStudents}
                     </Card.Text>
-                    <div className="d-flex justify-content-end">
+                    <div className="d-flex justify-content-end gap-2">
                       <Button
                         variant="outline-success"
                         className="mt-2"
-                        onClick={() =>
-                          navigate(`/profesor/calificaciones/${curso._id}`)
-                        }
+                        onClick={() => navigate(`/profesor/calificaciones/${curso._id}`)}
                       >
                         Calificaciones
                       </Button>
@@ -63,6 +73,12 @@ const CursosProfesorPage = () => {
                         onClick={() => setCursoSeleccionado(curso)}
                       >
                         Editar
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => handleEliminarCurso(curso._id)}
+                      >
+                        Eliminar
                       </Button>
                     </div>
                   </Card.Body>
@@ -83,8 +99,24 @@ const CursosProfesorPage = () => {
           onActualizado={() => dispatch(getCursosProfesor())}
         />
       )}
+
+      {/* Modal de error personalizado */}
+      <Modal show={mostrarErrorModal} onHide={() => setMostrarErrorModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>No se pudo eliminar el curso</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{errorEliminar}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setMostrarErrorModal(false)}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
 
 export default CursosProfesorPage;
+

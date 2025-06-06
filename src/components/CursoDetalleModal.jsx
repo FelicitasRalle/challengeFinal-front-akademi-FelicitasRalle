@@ -24,17 +24,6 @@ const CursoDetalleModal = ({ curso, onHide, onActualizado }) => {
     }
   };
 
-  const handleEliminar = async () => {
-    try {
-      await axios.delete(`/courses/${curso._id}`);
-      setMostrarConfirmacion(false);
-      onHide();
-      onActualizado();
-    } catch (error) {
-      console.error("Error al eliminar curso:", error);
-    }
-  };
-
   return (
     <>
       {!mostrarConfirmacion && (
@@ -120,9 +109,6 @@ const CursoDetalleModal = ({ curso, onHide, onActualizado }) => {
                 Editar
               </Button>
             )}
-            <Button variant="danger" onClick={() => setMostrarConfirmacion(true)}>
-              Eliminar
-            </Button>
             <Button variant="secondary" onClick={onHide}>
               Cerrar
             </Button>
@@ -130,22 +116,6 @@ const CursoDetalleModal = ({ curso, onHide, onActualizado }) => {
         </Modal>
       )}
 
-      <Modal show={mostrarConfirmacion} onHide={() => setMostrarConfirmacion(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmar eliminación</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          ¿Estás seguro de que querés eliminar el curso <strong>{curso.title}</strong>?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setMostrarConfirmacion(false)}>
-            Cancelar
-          </Button>
-          <Button variant="danger" onClick={handleEliminar}>
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };

@@ -10,11 +10,11 @@ import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import NavbarSuperadmin from "../components/NavBarSuperadmin";
 import CrearUsuarioModal from "../components/CrearUsuarioModal";
 import ConfirmarEliminarModal from "../components/ConfirmarEliminarModal";
+import { Modal, Button } from "react-bootstrap";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
   const { usuarios, loading } = useSelector((state) => state.usuarios);
-  console.log("Usuarios en Redux:", usuarios);
 
   const [editando, setEditando] = useState(null);
   const [form, setForm] = useState({
@@ -28,8 +28,10 @@ const SuperAdminDashboard = () => {
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
   const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
 
+  const [errorEliminar, setErrorEliminar] = useState("");
+  const [mostrarErrorModal, setMostrarErrorModal] = useState(false);
+
   useEffect(() => {
-    console.log("Ejecutando useEffect");
     dispatch(getUsuarios());
   }, [dispatch]);
 
@@ -43,8 +45,19 @@ const SuperAdminDashboard = () => {
     setEditando(null);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteUsuario(id));
+  const handleDelete = async (id) => {
+    try {
+      await dispatch(deleteUsuario(id));
+    } catch (error) {
+      if (error.response?.status === 409) {
+        setErrorEliminar(error.response.data.message);
+        setMostrarErrorModal(true);
+      } else {
+        setErrorEliminar("Error al eliminar usuario.");
+        setMostrarErrorModal(true);
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -169,14 +182,30 @@ const SuperAdminDashboard = () => {
       <ConfirmarEliminarModal
         show={mostrarConfirmacion}
         onHide={() => setMostrarConfirmacion(false)}
-        onConfirm={() => {
-          handleDelete(usuarioAEliminar);
+        onConfirm={async () => {
+          await handleDelete(usuarioAEliminar);
           setMostrarConfirmacion(false);
         }}
       />
+
+      {/* Modal de error personalizado */}
+      <Modal show={mostrarErrorModal} onHide={() => setMostrarErrorModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>No se pudo eliminar el usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{errorEliminar}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setMostrarErrorModal(false)}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
 
 export default SuperAdminDashboard;
+
 
