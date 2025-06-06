@@ -1,0 +1,45 @@
+.admin-calificaciones-container {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.admin-calificaciones-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.admin-calificaciones-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-calificaciones-tabla th,
+.admin-calificaciones-tabla td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.admin-calificaciones-tabla th {
+  background-color: #e9ecef;
+  font-weight: 600;
+}
+
+.admin-calificaciones-loading,
+.admin-calificaciones-error,
+.admin-calificaciones-empty {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  color: #6c757d;
+}
+
+.admin-calificaciones-error {
+  color: #dc3545;
+}

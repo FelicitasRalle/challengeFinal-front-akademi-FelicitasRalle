@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import NavbarSuperadmin from "../components/NavBarSuperadmin";
-import "../styles/tablaCalificacionesAlumno.css";
+import "../styles/calificacionesAdmin.css";
 
 const CalificacionesAdminPage = () => {
   const [grades, setGrades] = useState([]);
@@ -29,16 +29,16 @@ const CalificacionesAdminPage = () => {
   return (
     <>
       <NavbarSuperadmin />
-      <div className="tabla-container">
-        <h2 className="tabla-title">Todas las Calificaciones</h2>
+      <div className="admin-calificaciones-container">
+        <h2 className="admin-calificaciones-title">Todas las Calificaciones</h2>
         {loading ? (
-          <p>Cargando...</p>
+          <p className="admin-calificaciones-loading">Cargando...</p>
         ) : error ? (
-          <p className="text-danger">{error}</p>
+          <p className="admin-calificaciones-error">{error}</p>
         ) : grades.length === 0 ? (
-          <p>No hay calificaciones para mostrar.</p>
+          <p className="admin-calificaciones-empty">No hay calificaciones para mostrar.</p>
         ) : (
-          <table className="tabla">
+          <table className="admin-calificaciones-tabla">
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -67,3 +67,4 @@ const CalificacionesAdminPage = () => {
 };
 
 export default CalificacionesAdminPage;
+
