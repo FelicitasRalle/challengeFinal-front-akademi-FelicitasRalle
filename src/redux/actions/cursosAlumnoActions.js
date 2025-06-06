@@ -1,12 +1,20 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const getCursos = () => async (dispatch) => {
+export const getCursos = (filtros = {}) => async (dispatch) => {
   dispatch({ type: "CURSOS_REQUEST" });
 
   try {
     const token = localStorage.getItem("token");
-    const res = await axios.get("/courses", {
+
+    const queryParams = new URLSearchParams();
+    for (const key in filtros) {
+      if (filtros[key]) {
+        queryParams.append(key, filtros[key]);
+      }
+    }
+
+    const res = await axios.get(`/courses?${queryParams.toString()}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -20,6 +28,7 @@ export const getCursos = () => async (dispatch) => {
     });
   }
 };
+
 
 export const inscribirseCurso = (courseId) => async (dispatch, getState) => {
   console.log("Inscribiendo al curso con ID:", courseId);
