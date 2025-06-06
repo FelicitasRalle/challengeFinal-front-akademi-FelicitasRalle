@@ -16,6 +16,9 @@ const CursosProfesorPage = () => {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
 
+  const [cursoAEliminar, setCursoAEliminar] = useState(null);
+  const [mostrarConfirmarEliminar, setMostrarConfirmarEliminar] = useState(false);
+
   const [errorEliminar, setErrorEliminar] = useState("");
   const [mostrarErrorModal, setMostrarErrorModal] = useState(false);
 
@@ -23,9 +26,10 @@ const CursosProfesorPage = () => {
     dispatch(getCursosProfesor());
   }, [dispatch]);
 
-  const handleEliminarCurso = async (cursoId) => {
+  const handleEliminarCurso = async () => {
     try {
-      await dispatch(eliminarCursoProfesor(cursoId));
+      await dispatch(eliminarCursoProfesor(cursoAEliminar));
+      setMostrarConfirmarEliminar(false);
     } catch (error) {
       if (error.response?.status === 409) {
         setErrorEliminar(error.response.data.message);
@@ -33,6 +37,7 @@ const CursosProfesorPage = () => {
         setErrorEliminar("Error al eliminar el curso.");
       }
       setMostrarErrorModal(true);
+      setMostrarConfirmarEliminar(false);
     }
   };
 
@@ -76,7 +81,10 @@ const CursosProfesorPage = () => {
                       </Button>
                       <Button
                         variant="outline-danger"
-                        onClick={() => handleEliminarCurso(curso._id)}
+                        onClick={() => {
+                          setCursoAEliminar(curso._id);
+                          setMostrarConfirmarEliminar(true);
+                        }}
                       >
                         Eliminar
                       </Button>
@@ -100,6 +108,24 @@ const CursosProfesorPage = () => {
         />
       )}
 
+      {/* Modal de confirmacion de eliminacion */}
+      <Modal show={mostrarConfirmarEliminar} onHide={() => setMostrarConfirmarEliminar(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar eliminación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro que querés eliminar este curso? Esta acción no se puede deshacer.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setMostrarConfirmarEliminar(false)}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleEliminarCurso}>
+            Eliminar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       {/* Modal de error personalizado */}
       <Modal show={mostrarErrorModal} onHide={() => setMostrarErrorModal(false)}>
         <Modal.Header closeButton>
@@ -119,4 +145,5 @@ const CursosProfesorPage = () => {
 };
 
 export default CursosProfesorPage;
+
 
