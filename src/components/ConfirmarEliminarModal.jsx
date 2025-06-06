@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import "../styles/superadmin.css";
 
 const ConfirmarEliminarModal = ({ show, onHide, onConfirm }) => {
   return (
@@ -14,7 +15,7 @@ const ConfirmarEliminarModal = ({ show, onHide, onConfirm }) => {
         <Button variant="secondary" onClick={onHide}>
           Cancelar
         </Button>
-        <Button variant="danger" onClick={onConfirm}>
+        <Button className="btn btn-eliminar" onClick={onConfirm}>
           Eliminar
         </Button>
       </Modal.Footer>

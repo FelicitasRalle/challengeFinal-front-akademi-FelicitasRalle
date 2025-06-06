@@ -43,6 +43,20 @@
   font-weight: bold;
 }
 
+.btn-eliminar{
+  background-color: #e24203 !important;
+  border: none !important;
+}
+
+.btn-eliminar:hover{
+  background-color: #ad4116 !important;
+  border: none !important;
+}
+
+.btn-crear{
+  background-color: #e24203 !important;
+  border: none !important;
+}
 
 input, select {
   border: 1px solid #ced4da;
@@ -73,9 +87,14 @@ input, select {
 }
 
 .btn-mas{
-  background-color: #0d3b66 !important;
+  background-color: #e24203 !important;
+  border: none !important;
 }
 
 .btn-mas:hover{
-  background-color: #31689c !important;
+  background-color: #9c5c31 !important;
+}
+
+.modal-header{
+  background-color: #e7602a;
 }

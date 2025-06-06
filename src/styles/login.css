@@ -23,12 +23,16 @@
 }
 
 .login-btn {
-  background-color: #F45C2C;
-  color: white;
-  font-weight: 500;
+  background-color: #F45C2C !important;
+  color: white !important;
+  font-weight: 500 !important;
   border: none;
 }
 
 .login-btn:hover {
-  background-color: #d94f23;
+  background-color: #d94f23 !important;
+}
+
+.link-register-password{
+  color: #d94f23;
 }

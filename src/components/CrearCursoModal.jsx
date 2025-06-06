@@ -100,7 +100,7 @@ const CrearCursoModal = ({ show, onHide, onCursoCreado }) => {
         <Button variant="secondary" onClick={onHide}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button className="btn btn-crear" onClick={handleSubmit}>
           Crear
         </Button>
       </Modal.Footer>

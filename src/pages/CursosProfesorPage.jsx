@@ -47,7 +47,7 @@ const CursosProfesorPage = () => {
       <div className="p-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Mis Cursos</h2>
-          <Button variant="primary" onClick={() => setMostrarModal(true)}>
+          <Button className="btn btn-crear" onClick={() => setMostrarModal(true)}>
             Crear Curso
           </Button>
         </div>
@@ -67,20 +67,19 @@ const CursosProfesorPage = () => {
                     </Card.Text>
                     <div className="d-flex justify-content-end gap-2">
                       <Button
-                        variant="outline-success"
-                        className="mt-2"
+                        className="mt-2 btn-calificaciones"
                         onClick={() => navigate(`/profesor/calificaciones/${curso._id}`)}
                       >
                         Calificaciones
                       </Button>
                       <Button
-                        variant="outline-primary"
+                      className="btn btn-editar-prof"
                         onClick={() => setCursoSeleccionado(curso)}
                       >
                         Editar
                       </Button>
                       <Button
-                        variant="outline-danger"
+                      className="btn-eliminar-prof"
                         onClick={() => {
                           setCursoAEliminar(curso._id);
                           setMostrarConfirmarEliminar(true);

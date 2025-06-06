@@ -40,19 +40,19 @@ const EstadisticasPage = () => {
         <div className="estadisticas-grid">
           <div className="estadistica-card">
             <h5>Cursos</h5>
-            <p>{data?.totalCursos ?? '-'}</p>
+            <p className='p-estadistica'>{data?.totalCursos ?? '-'}</p>
           </div>
           <div className="estadistica-card">
             <h5>Usuarios</h5>
-            <p>{data?.totalUsuarios ?? '-'}</p>
+            <p className='p-estadistica'>{data?.totalUsuarios ?? '-'}</p>
           </div>
           <div className="estadistica-card">
             <h5>Profesores</h5>
-            <p>{data?.totalProfesores ?? '-'}</p>
+            <p className='p-estadistica'>{data?.totalProfesores ?? '-'}</p>
           </div>
           <div className="estadistica-card">
             <h5>Alumnos</h5>
-            <p>{data?.totalAlumnos ?? '-'}</p>
+            <p className='p-estadistica'>{data?.totalAlumnos ?? '-'}</p>
           </div>
         </div>
       </div>

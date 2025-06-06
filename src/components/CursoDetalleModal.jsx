@@ -105,7 +105,7 @@ const CursoDetalleModal = ({ curso, onHide, onActualizado }) => {
                 Guardar cambios
               </Button>
             ) : (
-              <Button variant="primary" onClick={() => setEditando(true)}>
+              <Button className="btn btn-crear" onClick={() => setEditando(true)}>
                 Editar
               </Button>
             )}

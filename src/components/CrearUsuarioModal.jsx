@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import "../styles/superadmin.css";
 
 const CrearUsuarioModal = ({ show, onHide, onUsuarioCreado }) => {
   const [form, setForm] = useState({
@@ -51,7 +52,7 @@ const CrearUsuarioModal = ({ show, onHide, onUsuarioCreado }) => {
 
   return (
     <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
+      <Modal.Header closeButton className="modal-header">
         <Modal.Title>Crear Nuevo Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -100,7 +101,7 @@ const CrearUsuarioModal = ({ show, onHide, onUsuarioCreado }) => {
             <Button variant="secondary" onClick={onHide}>
               Cancelar
             </Button>
-            <Button type="submit" variant="primary" className="ms-2">
+            <Button type="submit" className="ms-2 btn-crear">
               Crear
             </Button>
           </div>

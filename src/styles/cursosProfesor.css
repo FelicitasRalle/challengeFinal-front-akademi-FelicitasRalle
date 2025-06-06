@@ -19,3 +19,30 @@
 .card-curso .card-text {
   color: #555;
 }
+
+.btn-calificaciones{
+  background-color: #063a6b !important;
+  border: none !important;
+  padding-top: 9px !important;
+}
+
+.btn-calificaciones:hover{
+  background-color: #1e5586 !important;
+}
+
+.btn-editar-prof{
+  background-color: #ca4a0f !important;
+  border: none !important;
+}
+
+.btn-editar-prof:hover{
+  background-color: #eb6526 !important;
+}
+
+.btn-eliminar-prof{
+  background-color: #6b1506 !important;
+  border: none !important;
+}
+
+.btn-eliminar-prof:hover{
+  background-color: #8f2816 !important;

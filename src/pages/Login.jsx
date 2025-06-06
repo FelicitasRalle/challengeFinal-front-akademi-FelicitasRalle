@@ -84,10 +84,10 @@ const LoginPage = () => {
         </form>
         <div className="mt-3 text-center">
           <span>¿No tenés cuenta? </span>
-          <a href="/register">Registrate aquí</a>
+          <a href="/register" className="link-register-password">Registrate aquí</a>
         </div>
         <div className="mt-2 text-center">
-          <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+          <a href="/forgot-password" className="link-register-password">¿Olvidaste tu contraseña?</a>
         </div>
       </div>
     </div>
