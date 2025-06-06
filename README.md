@@ -1,12 +1,23 @@
-# React + Vite
+# Frontend - Plataforma Akademi
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto representa el **frontend** de la plataforma Akademi, una aplicación web de gestión educativa construida con React. Incluye distintos paneles según el rol del usuario: `superadmin`, `professor` o `student`, permitiendo gestionar usuarios, cursos, inscripciones y calificaciones.
 
-Currently, two official plugins are available:
+## Tecnologías utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React
+- Redux
+- React Bootstrap
+- React Router DOM
+- Axios
 
-## Expanding the ESLint configuration
+## Requisitos previos
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js (v16 o superior recomendado)
+- Tener el backend del proyecto corriendo localmente en `http://localhost:5000`
+
+## Instalación y ejecución
+
+1. Clonar el repositorio:
+   ```bash
+   git clone <repo-frontend-url>
+   cd nombre-del-front
