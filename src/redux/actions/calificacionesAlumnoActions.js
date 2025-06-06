@@ -4,7 +4,13 @@ export const fetchStudentGrades = (studentId) => async (dispatch) => {
   try {
     dispatch({ type: 'CALIFICACIONES_ALUMNO_REQUEST' });
 
-    const res = await axios.get(`/api/grades/student/${studentId}`);
+    const token = localStorage.getItem('token');
+
+    const res = await axios.get(`/grades/student/${studentId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     dispatch({
       type: 'CALIFICACIONES_ALUMNO_SUCCESS',
@@ -17,3 +23,5 @@ export const fetchStudentGrades = (studentId) => async (dispatch) => {
     });
   }
 };
+
+
