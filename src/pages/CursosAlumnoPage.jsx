@@ -1,3 +1,4 @@
+// src/pages/CursosAlumnoPage.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,14 +18,21 @@ const CursosAlumnoPage = () => {
   const [mensaje, setMensaje] = useState(null);
   const { misCursos } = useSelector((state) => state.cursos);
 
+  const [filtros, setFiltros] = useState({ category: '', level: '', maxPrice: '' });
+
   const yaInscripto = misCursos?.some(
     (c) => c.course?._id === cursoSeleccionado?._id
   );
 
   useEffect(() => {
-    dispatch(getCursos());
+    const filtrosFormateados = {
+      ...filtros,
+      category: filtros.category?.toLowerCase(),
+      level: filtros.level?.toLowerCase(),
+    };
+    dispatch(getCursos(filtrosFormateados));
     dispatch(getMisCursos());
-  }, [dispatch]);
+  }, [dispatch, filtros]);
 
   const handleVerMas = (curso) => {
     setCursoSeleccionado(curso);
@@ -35,12 +43,17 @@ const CursosAlumnoPage = () => {
   const handleInscripcion = async () => {
     try {
       await dispatch(inscribirseCurso(cursoSeleccionado._id));
-      await dispatch(getCursos()); // actualiza el catálogo
-      await dispatch(getMisCursos()); // actualiza los cursos del alumno
+      await dispatch(getCursos(filtros));
+      await dispatch(getMisCursos());
       setMensaje("Inscripción exitosa");
     } catch {
       setMensaje("No se pudo realizar la inscripción");
     }
+  };
+
+  const handleFiltroChange = (e) => {
+    const { name, value } = e.target;
+    setFiltros((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -48,6 +61,30 @@ const CursosAlumnoPage = () => {
       <NavbarAlumno />
       <div className="cursos-container">
         <h2 className="cursos-title">Todos los Cursos</h2>
+
+        <div className="filtros mb-4">
+          <input
+            type="text"
+            name="category"
+            value={filtros.category}
+            placeholder="Categoría"
+            onChange={handleFiltroChange}
+          />
+          <select name="level" value={filtros.level} onChange={handleFiltroChange}>
+            <option value="">Nivel</option>
+            <option value="beginner">Principiante</option>
+            <option value="intermediate">Intermedio</option>
+            <option value="advanced">Avanzado</option>
+          </select>
+          <input
+            type="number"
+            name="maxPrice"
+            value={filtros.maxPrice}
+            placeholder="Precio máximo"
+            onChange={handleFiltroChange}
+          />
+        </div>
+
         {loading ? (
           <div className="text-center">
             <Spinner animation="border" />
@@ -127,3 +164,4 @@ const CursosAlumnoPage = () => {
 };
 
 export default CursosAlumnoPage;
+

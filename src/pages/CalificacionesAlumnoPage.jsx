@@ -1,8 +1,8 @@
-// src/pages/CalificacionesAlumnoPage.jsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchStudentGrades } from '../redux/actions/calificacionesAlumnoActions';
 import NavbarAlumno from '../components/NavbarAlumno';
+import '../styles/tablaCalificacionesAlumno.css';
 
 const CalificacionesAlumnoPage = () => {
   const dispatch = useDispatch();
@@ -26,11 +26,11 @@ const CalificacionesAlumnoPage = () => {
     <div>
       <NavbarAlumno />
       <div className="container mt-4">
-        <h2>Mis Calificaciones</h2>
+        <h2 className="titulo-calificaciones">Mis Calificaciones</h2>
         {(!notas || notas.length === 0) ? (
-          <p>No hay calificaciones para mostrar.</p>
+          <p className="mensaje-vacio">No hay calificaciones para mostrar.</p>
         ) : (
-          <table className="table table-bordered">
+          <table className="tabla-calificaciones">
             <thead>
               <tr>
                 <th>Curso</th>
@@ -55,6 +55,7 @@ const CalificacionesAlumnoPage = () => {
 };
 
 export default CalificacionesAlumnoPage;
+
 
 
 
